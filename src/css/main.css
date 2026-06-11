@@ -55,6 +55,12 @@
   box-sizing: border-box;
 }
 
+/* 去除 fieldset 浏览器默认边框 */
+fieldset {
+  border: none;
+  min-inline-size: 0;
+}
+
 html {
   height: 100%;
   -webkit-tap-highlight-color: transparent;
@@ -164,8 +170,15 @@ body {
   background: var(--card);
   border-radius: var(--radius);
   padding: 16px 18px;
-  box-shadow: 0 2px 12px var(--shadow), 0 0 0 1px var(--border);
+  box-shadow: 0 2px 12px var(--shadow);
   border: 1px solid var(--border);
+}
+
+/* 暗色模式：去除卡片边框，仅用阴影区分 */
+@media (prefers-color-scheme: dark) {
+  .card {
+    border-color: transparent;
+  }
 }
 
 /* ==================== 自动时间显示区 ==================== */
@@ -210,6 +223,9 @@ body {
   gap: 10px;
   align-items: center;
   margin-top: 10px;
+  border: none;
+  padding: 0;
+  min-inline-size: 0;
 }
 
 .input-group {
@@ -226,36 +242,75 @@ body {
   text-align: center;
 }
 
-.input-group select,
+.input-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 10px 28px 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  /* 自定义下拉箭头：深金色 SVG */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%23886a30'/%3E%3C/svg%3E") no-repeat right 10px center,
+    var(--card2);
+  color: var(--text);
+  font-size: 15px;
+  text-align: center;
+  text-align-last: center;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-group select:hover {
+  border-color: var(--gold);
+}
+.input-group select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,164,78,0.15);
+}
+
 .input-group input {
   appearance: none;
   -webkit-appearance: none;
   width: 100%;
   padding: 10px 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card2);
   color: var(--text);
   font-size: 15px;
   text-align: center;
   font-family: inherit;
-  cursor: pointer;
+  cursor: text;
   outline: none;
   box-shadow: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-
-.input-group select:focus,
+.input-group input:hover {
+  border-color: var(--gold);
+}
 .input-group input:focus {
   border-color: var(--gold);
-  outline: none;
-  box-shadow: none;
+  box-shadow: 0 0 0 3px rgba(200,164,78,0.15);
 }
 
 .input-group input::placeholder {
   color: var(--text2);
   opacity: 0.4;
   font-size: 12px;
+}
+
+/* 暗色模式：输入框边框稍亮，确保可见 */
+@media (prefers-color-scheme: dark) {
+  .input-group select,
+  .input-group input {
+    border-color: #4a3a28;
+  }
+  .input-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%23b89030'/%3E%3C/svg%3E");
+  }
 }
 
 /* ==================== 按钮 ==================== */
@@ -738,6 +793,6 @@ body {
   .palace .p-name { font-size: 14px; }
   .circle-center { width: 36px; height: 36px; }
   .circle-center .yin-yang { font-size: 18px; }
-  .input-group select,
+  .input-group select { font-size: 13px; padding: 8px 24px 8px 4px; }
   .input-group input { font-size: 13px; padding: 8px 4px; }
 }

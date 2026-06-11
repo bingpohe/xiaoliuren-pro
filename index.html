@@ -39,7 +39,7 @@
       </div>
 
       <!-- 农历月日时输入 -->
-      <fieldset class="input-row">
+      <div class="input-row">
         <legend class="sr-only">农历时间选择</legend>
         <div class="input-group">
           <label for="lunarMonth">农历月</label>
@@ -53,7 +53,7 @@
           <label for="lunarHour">时辰</label>
           <select id="lunarHour" aria-required="true"></select>
         </div>
-      </fieldset>
+      </div>
 
       <button type="button" class="btn btn-primary" id="btnCalc">
         🔮 开始推算
@@ -65,7 +65,7 @@
       <!-- 三数报数法 -->
       <div class="divider" role="separator">— 或使用报数法 —</div>
       
-      <fieldset class="input-row">
+      <div class="input-row">
         <legend class="sr-only">三数报数法</legend>
         <div class="input-group">
           <label for="num1">数一</label>
@@ -82,7 +82,7 @@
           <input type="number" id="num3" placeholder="任意数" min="1" max="999"
                  inputmode="numeric">
         </div>
-      </fieldset>
+      </div>
       <span id="numHelp" class="sr-only">留空将自动生成随机数字</span>
       
       <button type="button" class="btn btn-outline btn-gold" id="btnNumber">
