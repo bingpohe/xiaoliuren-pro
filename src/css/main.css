@@ -272,8 +272,6 @@ body {
 }
 
 .input-group input {
-  appearance: none;
-  -webkit-appearance: none;
   width: 100%;
   padding: 10px 8px;
   border: 1px solid var(--border);
@@ -287,6 +285,12 @@ body {
   outline: none;
   box-shadow: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+/* 数字输入框上下箭头始终显示 */
+.input-group input[type="number"]::-webkit-inner-spin-button,
+.input-group input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: inner-spin-button !important;
+  opacity: 1 !important;
 }
 .input-group input:hover {
   border-color: var(--gold);
