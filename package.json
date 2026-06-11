@@ -1,0 +1,40 @@
+{
+  "name": "xiaoliuren-pro",
+  "version": "2.0.0",
+  "description": "小六壬占卜 - 诸葛马前课（重构版）| 传统占卜术 PWA 应用",
+  "type": "module",
+  "main": "src/js/main.js",
+  "scripts": {
+    "dev": "npx serve public -l 3000 --no-clipboard",
+    "lint": "eslint src/js/**/*.js tests/**/*.js",
+    "lint:fix": "eslint src/js/**/*.js tests/**/*.js --fix",
+    "format": "prettier --write \"src/**/*.{js,css,html}\" \"tests/**/*.js\"",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "npm test -- --coverage",
+    "build": "echo 'Build step: copy src to public for production'",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "divination",
+    "chinese",
+    "pwa",
+    "lunar-calendar",
+    "小六壬",
+    "诸葛马前课"
+  ],
+  "author": "XiaoLiuRen Team",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.4",
+    "husky": "^9.0.10"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/xiaoliuren-pro.git"
+  }
+}

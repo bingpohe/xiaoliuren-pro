@@ -1,0 +1,23 @@
+{
+  "name": "小六壬占卜 Pro - 诸葛马前课（重构版）",
+  "short_name": "小六壬 Pro",
+  "description": "中国传统小六壬掌诀占卜 Pro 版本，模块化架构，支持离线使用，完整无障碍支持",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#8b1a1a",
+  "background_color": "#f5e6c8",
+  "categories": ["lifestyle", "entertainment"],
+  "lang": "zh-CN",
+  "version": "2.0.0",
+  "icons": [
+    {
+      "src": "icons/LOGO68.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

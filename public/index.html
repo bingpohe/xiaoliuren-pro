@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#8b1a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="小六壬 Pro">
+  
+  <!-- 安全策略 -->
+  <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  
+  <meta name="description" content="小六壬占卜 Pro - 诸葛马前课，中国传统占卜术 PWA 应用">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/LOGO68.png">
+  <title>小六壬占卜 Pro</title>
+  
+  <!-- 外部样式表 -->
+  <link rel="stylesheet" href="../src/css/main.css">
+</head>
+<body>
+  <!-- 页头 -->
+  <header class="header" role="banner">
+    <div class="icon" aria-hidden="true">🏮</div>
+    <h1>小六壬占卜 Pro</h1>
+    <p class="subtitle">诸葛马前课 · 掌诀推算 · 重构版</p>
+  </header>
+
+  <main class="app-container" role="main">
+    <!-- 自动时间显示区 -->
+    <section class="card" aria-label="时间与输入">
+      <div class="auto-time" role="status" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="label">今日</span>
+        <time class="value" id="autoDate" datetime="">--</time>
+        <time class="value" id="autoTime">--</time>
+      </div>
+
+      <!-- 农历月日时输入 -->
+      <fieldset class="input-row">
+        <legend class="sr-only">农历时间选择</legend>
+        <div class="input-group">
+          <label for="lunarMonth">农历月</label>
+          <select id="lunarMonth" aria-required="true"></select>
+        </div>
+        <div class="input-group">
+          <label for="lunarDay">农历日</label>
+          <select id="lunarDay" aria-required="true"></select>
+        </div>
+        <div class="input-group">
+          <label for="lunarHour">时辰</label>
+          <select id="lunarHour" aria-required="true"></select>
+        </div>
+      </fieldset>
+
+      <button type="button" class="btn btn-primary" id="btnCalc">
+        🔮 开始推算
+      </button>
+      <button type="button" class="btn btn-outline" id="btnAuto">
+        📍 使用当前时间
+      </button>
+
+      <!-- 三数报数法 -->
+      <div class="divider" role="separator">— 或使用报数法 —</div>
+      
+      <fieldset class="input-row">
+        <legend class="sr-only">三数报数法</legend>
+        <div class="input-group">
+          <label for="num1">数一</label>
+          <input type="number" id="num1" placeholder="任意数" min="1" max="999"
+                 inputmode="numeric" aria-describedby="numHelp">
+        </div>
+        <div class="input-group">
+          <label for="num2">数二</label>
+          <input type="number" id="num2" placeholder="任意数" min="1" max="999"
+                 inputmode="numeric">
+        </div>
+        <div class="input-group">
+          <label for="num3">数三</label>
+          <input type="number" id="num3" placeholder="任意数" min="1" max="999"
+                 inputmode="numeric">
+        </div>
+      </fieldset>
+      <span id="numHelp" class="sr-only">留空将自动生成随机数字</span>
+      
+      <button type="button" class="btn btn-outline btn-gold" id="btnNumber">
+        🎲 随机取数推算
+      </button>
+    </section>
+
+    <!-- PWA 安装横幅 -->
+    <aside class="install-banner" id="installBanner" role="alert" aria-live="assertive">
+      📲 点击安装到手机主屏幕，随时随地占卜
+    </aside>
+
+    <!-- 六宫格可视化区域 -->
+    <section class="card card-circle" aria-label="六宫掌诀罗盘">
+      <div class="circle-container" id="circleContainer" role="img" 
+           aria-label="小六壬六宫格：大安、留连、速喜、赤口、小吉、空亡">
+        
+        <!-- 六个宫位 -->
+        <article class="palace palace-1" data-index="1" tabindex="0"
+                 aria-label="第一宫 大安 大吉">
+          <span class="p-index" aria-hidden="true">壹</span>
+          <span class="p-name">大安</span>
+          <span class="p-fortune">大吉</span>
+        </article>
+        
+        <article class="palace palace-2" data-index="2" tabindex="0"
+                 aria-label="第二宫 留连 小凶">
+          <span class="p-index" aria-hidden="true">贰</span>
+          <span class="p-name">留连</span>
+          <span class="p-fortune">小凶</span>
+        </article>
+        
+        <article class="palace palace-3" data-index="3" tabindex="0"
+                 aria-label="第三宫 速喜 吉">
+          <span class="p-index" aria-hidden="true">叁</span>
+          <span class="p-name">速喜</span>
+          <span class="p-fortune">吉</span>
+        </article>
+        
+        <article class="palace palace-4" data-index="4" tabindex="0"
+                 aria-label="第四宫 赤口 凶">
+          <span class="p-index" aria-hidden="true">肆</span>
+          <span class="p-name">赤口</span>
+          <span class="p-fortune">凶</span>
+        </article>
+        
+        <article class="palace palace-5" data-index="5" tabindex="0"
+                 aria-label="第五宫 小吉 小吉">
+          <span class="p-index" aria-hidden="true">伍</span>
+          <span class="p-name">小吉</span>
+          <span class="p-fortune">小吉</span>
+        </article>
+        
+        <article class="palace palace-6" data-index="6" tabindex="0"
+                 aria-label="第六宫 空亡 大凶">
+          <span class="p-index" aria-hidden="true">陆</span>
+          <span class="p-name">空亡</span>
+          <span class="p-fortune">大凶</span>
+        </article>
+
+        <!-- 中央太极图 -->
+        <div class="circle-center" aria-hidden="true">
+          <span class="yin-yang">☯</span>
+        </div>
+      </div>
+
+      <!-- 步骤指示器 -->
+      <nav class="steps-row" aria-label="推算步骤进度">
+        <span class="step-dot" id="step1" aria-current="false">月</span>
+        <span class="step-arrow" aria-hidden="true">→</span>
+        <span class="step-dot" id="step2" aria-current="false">日</span>
+        <span class="step-arrow" aria-hidden="true">→</span>
+        <span class="step-dot" id="step3" aria-current="false">时</span>
+      </nav>
+    </section>
+
+    <!-- 结果卡片区域 -->
+    <section class="result-card hidden" id="resultCard" aria-live="polite" 
+             aria-label="推算结果">
+    </section>
+  </main>
+
+  <!-- 屏幕阅读器专用文本 -->
+  <span class="sr-only" aria-live="assertive" id="ariaAnnouncer"></span>
+
+  <!-- ES Module 入口 -->
+  <script type="module" src="../src/js/main.js"></script>
+</body>
+</html>

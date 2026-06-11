@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "prefer-const": "error",
+    "no-var": "error",
+    "eqeqeq": ["warn", "always"],
+    "curly": ["error", "all"],
+    "no-shadow": "error",
+    "max-lines-per-function": ["warn", { "max": 80, "skipBlankLines": true, "skipComments": true }]
+  },
+  "globals": {
+    "CONFIG": "readonly",
+    "PALACES": "readonly",
+    "LUNAR_YEAR_DATA": "readonly"
+  }
+}

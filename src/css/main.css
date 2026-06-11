@@ -1,0 +1,734 @@
+/**
+ * 小六壬 Pro - 主样式表
+ * 
+ * 设计系统：
+ * - CSS 自定义属性（Design Tokens）管理配色
+ * - BEM 命名规范
+ * - 移动优先响应式设计
+ * - 暗色模式自动切换
+ */
+
+/* ==================== CSS 自定义属性 (Design Tokens) ==================== */
+:root {
+  /* 配色方案：中国传统色系 */
+  --bg: #f5e6c8;
+  --card: #fdf5e6;
+  --card2: #faf0dc;
+  --text: #2c1810;
+  --text2: #5c3a28;
+  --red: #b22222;
+  --red2: #8b1a1a;
+  --gold: #c8a44e;
+  --gold2: #a07830;
+  --gold-light: #e8d5a3;
+  --green: #2d6a4f;
+  --yin: #e8dcc8;
+  --border: #d4c5a0;
+  --shadow: rgba(44,24,16,0.12);
+  --radius: 16px;
+  --safe-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* 暗色模式 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1410;
+    --card: #231a12;
+    --card2: #2a1f16;
+    --text: #e8dcc8;
+    --text2: #c4b898;
+    --red: #d44444;
+    --red2: #b22222;
+    --gold: #d4b060;
+    --gold2: #b89030;
+    --gold-light: #5a4828;
+    --yin: #2a1f16;
+    --border: #3a2a18;
+    --shadow: rgba(0,0,0,0.3);
+  }
+}
+
+/* ==================== 全局重置 ==================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px calc(20px + var(--safe-bottom));
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* 页面背景纹理 */
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(200,164,78,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(139,26,26,0.05) 0%, transparent 40%);
+}
+
+/* ==================== 无障碍：屏幕阅读器专用 ==================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==================== 键盘焦点样式 ==================== */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* 移除默认焦点（仅保留 focus-visible） */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ==================== 减少动效偏好 ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==================== 页头 ==================== */
+.header {
+  text-align: center;
+  padding: 12px 0 8px;
+}
+
+.header .icon {
+  font-size: 44px;
+  margin-bottom: 4px;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--red2);
+  letter-spacing: 3px;
+  background: linear-gradient(180deg, var(--red) 0%, var(--red2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header .subtitle {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* ==================== 主容器 ==================== */
+.app-container {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ==================== 通用卡片样式 ==================== */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 2px 12px var(--shadow), 0 0 0 1px var(--border);
+  border: 1px solid var(--border);
+}
+
+/* ==================== 自动时间显示区 ==================== */
+.auto-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--card2);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.auto-time .label {
+  opacity: 0.7;
+}
+
+.auto-time .value {
+  font-weight: 600;
+  color: var(--red);
+  font-size: 16px;
+}
+
+.auto-time .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ==================== 输入控件 ==================== */
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.input-group select,
+.input-group input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card2);
+  color: var(--text);
+  font-size: 15px;
+  text-align: center;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group select:focus,
+.input-group input:focus {
+  border-color: var(--gold);
+}
+
+.input-group input::placeholder {
+  color: var(--text2);
+  opacity: 0.4;
+  font-size: 12px;
+}
+
+/* ==================== 按钮 ==================== */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red2) 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(178,34,34,0.35);
+  margin-top: 12px;
+}
+
+.btn-primary:active {
+  box-shadow: 0 2px 8px rgba(178,34,34,0.25);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--red);
+  border: 1.5px solid var(--red);
+  font-size: 14px;
+  padding: 10px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+.btn-gold {
+  background: transparent;
+  color: var(--gold2);
+  border: 1.5px solid var(--gold);
+  font-size: 14px;
+  padding: 10px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+/* ==================== 六宫格布局 ==================== */
+.circle-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2px;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-width: 400px;
+  margin: 0 auto;
+  background: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.circle-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--yin);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.4s;
+}
+
+.circle-center .yin-yang {
+  font-size: 22px;
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 掌诀宫格 */
+.palace {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  border: 2px solid transparent;
+  background: var(--card2);
+  box-shadow: 0 1px 4px var(--shadow);
+}
+
+.palace .p-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+.palace .p-fortune {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text2);
+}
+
+.palace .p-index {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 10px;
+  color: var(--text2);
+  opacity: 0.45;
+}
+
+/* 宫格高亮状态 */
+.palace.active {
+  border-color: var(--gold);
+  background: var(--gold-light);
+  box-shadow: 0 0 20px rgba(200,164,78,0.4), 0 4px 16px var(--shadow);
+  transform: scale(1.06);
+  z-index: 5;
+  animation: glow-pulse 0.6s ease-in-out;
+}
+
+.palace.result {
+  border-color: var(--red);
+  background: #fff;
+  box-shadow: 0 0 28px rgba(178,34,34,0.5), 0 4px 20px var(--shadow);
+  transform: scale(1.1);
+  z-index: 6;
+  animation: result-glow 0.8s ease-in-out infinite alternate;
+}
+
+.palace.trail {
+  border-color: rgba(200,164,78,0.18);
+  background: #fef9e7;
+  box-shadow: 0 0 3px rgba(200,164,78,0.06);
+  transform: scale(1.0);
+}
+
+.palace.counting {
+  border-color: var(--gold);
+  background: #fff8e8;
+  box-shadow: 0 0 24px rgba(200,164,78,0.6), 0 6px 16px var(--shadow);
+  transform: scale(1.12);
+  z-index: 7;
+  animation: counting-pulse 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 0 rgba(200,164,78,0); }
+  50% { box-shadow: 0 0 28px rgba(200,164,78,0.5), 0 4px 16px var(--shadow); }
+  100% { box-shadow: 0 0 20px rgba(200,164,78,0.4), 0 4px 16px var(--shadow); }
+}
+
+@keyframes result-glow {
+  from { box-shadow: 0 0 20px rgba(178,34,34,0.4), 0 4px 16px var(--shadow); }
+  to { box-shadow: 0 0 36px rgba(178,34,34,0.7), 0 6px 24px var(--shadow); }
+}
+
+@keyframes counting-pulse {
+  from {
+    box-shadow: 0 0 18px rgba(200,164,78,0.45), 0 4px 12px var(--shadow);
+    transform: scale(1.1);
+  }
+  to {
+    box-shadow: 0 0 34px rgba(200,164,78,0.75), 0 8px 20px var(--shadow);
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .palace.trail {
+    background: #2a2010;
+    border-color: rgba(200,164,78,0.1);
+  }
+  .palace.counting {
+    background: #3a2a10;
+  }
+}
+
+/* 宫格排列顺序（Grid order） */
+.palace-1 { order: 3; }
+.palace-2 { order: 0; }
+.palace-3 { order: 1; }
+.palace-4 { order: 2; }
+.palace-5 { order: 5; }
+.palace-6 { order: 4; }
+
+/* ==================== 步骤指示器 ==================== */
+.steps-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+  margin-top: 8px;
+}
+
+.step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--yin);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text2);
+  transition: all 0.3s;
+}
+
+.step-dot.done {
+  background: var(--gold-light);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+
+.step-dot.current {
+  background: var(--red);
+  border-color: var(--red2);
+  color: #fff;
+  animation: pulse-dot 0.8s ease-in-out infinite;
+}
+
+.step-arrow {
+  color: var(--border);
+  font-size: 12px;
+}
+
+/* ==================== 结果卡片 ==================== */
+.result-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 2px solid var(--gold);
+  box-shadow: 0 4px 24px var(--shadow), 0 0 0 1px var(--border);
+  overflow: hidden;
+  animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+  background: linear-gradient(135deg, var(--red2) 0%, #5a1010 100%);
+  color: #fff;
+  padding: 18px 20px;
+  text-align: center;
+}
+
+.result-header .r-name {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.result-header .r-fortune {
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-top: 4px;
+  opacity: 0.85;
+  padding: 2px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.fortune-good { background: rgba(255,255,255,0.15); }
+.fortune-bad { background: rgba(0,0,0,0.25); }
+
+.result-body {
+  padding: 16px 18px;
+}
+
+.result-body .r-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.r-item {
+  background: var(--card2);
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.r-item .item-label {
+  font-size: 10px;
+  color: var(--text2);
+  letter-spacing: 1px;
+}
+
+.r-item .item-val {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 2px;
+  color: var(--text);
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  background: var(--card2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--gold);
+}
+
+.detail-item .d-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  margin-bottom: 2px;
+}
+
+.detail-item .d-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* 口诀展示框 */
+.koujue-box {
+  background: linear-gradient(135deg, #fef9e7 0%, #fdf3d0 100%);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  text-align: center;
+}
+
+.koujue-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold2);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.koujue-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #5c3a18;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+  .koujue-box {
+    background: linear-gradient(135deg, #2a2010 0%, #252010 100%);
+    border-color: var(--gold2);
+  }
+  .koujue-text { color: #d4c090; }
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 2px;
+  padding: 10px 0 6px;
+  text-align: center;
+}
+
+/* 吉凶指数进度条 */
+.fortune-meter {
+  margin-top: 14px;
+  padding: 12px;
+  background: var(--card2);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.meter-label {
+  font-size: 12px;
+  color: var(--text2);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.meter-bar {
+  height: 8px;
+  background: #e0d5c0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 240px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .meter-bar { background: #3a2a18; }
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.meter-good { background: linear-gradient(90deg, #2d6a4f, #52b788); }
+.meter-bad { background: linear-gradient(90deg, #8b1a1a, #d44444); }
+
+.meter-stars {
+  font-size: 13px;
+  margin-top: 4px;
+  color: var(--text2);
+  letter-spacing: 2px;
+}
+
+/* ==================== PWA 安装横幅 ==================== */
+.install-banner {
+  display: none;
+  background: var(--red2);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(178,34,34,0.3);
+}
+
+.install-banner.show {
+  display: block;
+  animation: slide-up 0.4s ease;
+}
+
+/* ==================== 辅助样式 ==================== */
+.divider {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text2);
+  opacity: 0.5;
+  letter-spacing: 2px;
+  padding: 4px 0;
+}
+
+.hidden { display: none !important; }
+
+/* ==================== 响应式适配 ==================== */
+@media (min-width: 420px) {
+  body { padding: 32px 20px calc(32px + var(--safe-bottom)); }
+  .header h1 { font-size: 32px; }
+  .palace .p-name { font-size: 18px; }
+}
+
+@media (max-width: 340px) {
+  .palace .p-name { font-size: 14px; }
+  .circle-center { width: 36px; height: 36px; }
+  .circle-center .yin-yang { font-size: 18px; }
+  .input-group select,
+  .input-group input { font-size: 13px; padding: 8px 4px; }
+}
