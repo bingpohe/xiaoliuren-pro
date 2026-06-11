@@ -104,6 +104,12 @@ body {
   outline: none;
 }
 
+/* 输入控件不使用焦点轮廓 */
+.input-group select:focus-visible,
+.input-group input:focus-visible {
+  outline: none;
+}
+
 /* ==================== 减少动效偏好 ==================== */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -226,7 +232,7 @@ body {
   -webkit-appearance: none;
   width: 100%;
   padding: 10px 8px;
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   border-radius: 10px;
   background: var(--card2);
   color: var(--text);
@@ -235,12 +241,15 @@ body {
   font-family: inherit;
   cursor: pointer;
   outline: none;
+  box-shadow: none;
   transition: border-color 0.2s;
 }
 
 .input-group select:focus,
 .input-group input:focus {
   border-color: var(--gold);
+  outline: none;
+  box-shadow: none;
 }
 
 .input-group input::placeholder {
