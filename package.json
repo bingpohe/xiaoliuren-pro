@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/js/main.js",
   "scripts": {
-    "dev": "npx serve public -l 3000 --no-clipboard",
+    "dev": "npx serve . -l 3000 --no-clipboard",
     "lint": "eslint src/js/**/*.js tests/**/*.js",
     "lint:fix": "eslint src/js/**/*.js tests/**/*.js --fix",
     "format": "prettier --write \"src/**/*.{js,css,html}\" \"tests/**/*.js\"",
