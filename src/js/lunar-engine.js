@@ -116,7 +116,7 @@ export function solarToLunar(date) {
   let lunarYear
   for (lunarYear = CONFIG.LUNAR.BASE_YEAR; lunarYear <= CONFIG.LUNAR.END_YEAR; lunarYear++) {
     const yDays = lunarYearDays(lunarYear)
-    if (offset < yDays) break
+    if (offset < yDays) {break}
     offset -= yDays
   }
 
@@ -164,17 +164,17 @@ export function solarToLunar(date) {
 export function getCurrentShiChen(date = new Date()) {
   const h = date.getHours()
 
-  if (h >= 23 || h < 1) return 1   // 子时
-  if (h >= 1 && h < 3) return 2    // 丑时
-  if (h >= 3 && h < 5) return 3    // 寅时
-  if (h >= 5 && h < 7) return 4    // 卯时
-  if (h >= 7 && h < 9) return 5    // 辰时
-  if (h >= 9 && h < 11) return 6   // 巳时
-  if (h >= 11 && h < 13) return 7  // 午时
-  if (h >= 13 && h < 15) return 8  // 未时
-  if (h >= 15 && h < 17) return 9  // 申时
-  if (h >= 17 && h < 19) return 10 // 酉时
-  if (h >= 19 && h < 21) return 11 // 戌时
+  if (h >= 23 || h < 1) {return 1}   // 子时
+  if (h >= 1 && h < 3) {return 2}    // 丑时
+  if (h >= 3 && h < 5) {return 3}    // 寅时
+  if (h >= 5 && h < 7) {return 4}    // 卯时
+  if (h >= 7 && h < 9) {return 5}    // 辰时
+  if (h >= 9 && h < 11) {return 6}   // 巳时
+  if (h >= 11 && h < 13) {return 7}  // 午时
+  if (h >= 13 && h < 15) {return 8}  // 未时
+  if (h >= 15 && h < 17) {return 9}  // 申时
+  if (h >= 17 && h < 19) {return 10} // 酉时
+  if (h >= 19 && h < 21) {return 11} // 戌时
   return 12                        // 亥时
 }
 

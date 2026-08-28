@@ -13,11 +13,10 @@
  * - 依赖注入：通过构造函数注入依赖
  */
 
-import { CONFIG, getAppVersion } from './config.js'
+import { CONFIG } from './config.js'
 import { solarToLunar, getCurrentShiChen } from './lunar-engine.js'
-import { calculate, CalculationInputError } from './calculator.js'
-import { SHI_CHEN } from './data.js'
-import { getAnimationController, AnimationState } from './animation.js'
+import { calculate } from './calculator.js'
+import { getAnimationController } from './animation.js'
 import { createUIController } from './ui-controller.js'
 
 /**
@@ -50,8 +49,6 @@ class XiaoliurenApp {
    */
   async init() {
     try {
-      console.log(`🏮 ${getAppVersion()} 正在启动...`)
-
       // 1. 初始化 UI 控制器
       this.ui = createUIController()
 
@@ -75,7 +72,6 @@ class XiaoliurenApp {
 
       // 标记就绪
       this.state = AppState.READY
-      console.log(`✅ ${getAppVersion()} 启动完成`)
 
       // 触发就绪事件
       window.dispatchEvent(new CustomEvent('app:ready'))
@@ -138,7 +134,7 @@ class XiaoliurenApp {
     }
 
     // 动画事件监听
-    this.animation.on('complete', ({ resultIdx }) => {
+    this.animation.on('complete', () => {
       this.ui.vibrate()
     })
   }
@@ -182,7 +178,7 @@ class XiaoliurenApp {
       this.ui.updateStepIndicator(3, null, isNumberMode ? '数3' : '时')
 
       // 5. 执行动画序列
-      await this._playAnimationSequence(result, isNumberMode)
+      await this._playAnimationSequence(result)
 
       // 6. 显示结果
       this.ui.showResultCard(result, isNumberMode, data)
@@ -198,9 +194,8 @@ class XiaoliurenApp {
   /**
    * 播放完整的推算动画序列
    * @param {object} result - 推算结果
-   * @param {boolean} isNumberMode - 是否为报数法
    */
-  async _playAnimationSequence(result, isNumberMode) {
+  async _playAnimationSequence(result) {
     const steps = result.steps
     const timing = CONFIG.ANIMATION.TIMING
 
@@ -306,7 +301,6 @@ class XiaoliurenApp {
     window.addEventListener('appinstalled', () => {
       deferredPrompt = null
       this.ui.showInstallBanner(false)
-      console.log('📲 小六壬 Pro 已安装到主屏幕')
     })
 
     // 点击安装横幅触发安装
@@ -315,10 +309,7 @@ class XiaoliurenApp {
       banner.addEventListener('click', async () => {
         if (deferredPrompt) {
           deferredPrompt.prompt()
-          const { outcome } = await deferredPrompt.userChoice
-          if (outcome === 'accepted') {
-            console.log('用户接受了安装')
-          }
+          await deferredPrompt.userChoice
           deferredPrompt = null
           this.ui.showInstallBanner(false)
         }

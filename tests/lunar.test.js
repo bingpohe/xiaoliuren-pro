@@ -9,14 +9,13 @@
  * - 错误处理
  */
 
-import { describe, it, expect, beforeEach } from '@jest/globals'
+import { describe, it, expect } from '@jest/globals'
 import {
   solarToLunar,
   getCurrentShiChen,
   getStemBranch,
   getLunarYearInfo,
   getLeapMonth,
-  getMonthDaysByIndex,
   lunarYearDays,
   LunarConversionError
 } from '../src/js/lunar-engine.js'

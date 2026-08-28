@@ -74,7 +74,7 @@ export class AnimationController {
     const listeners = this._listeners.get(event)
     if (listeners) {
       const index = listeners.indexOf(callback)
-      if (index > -1) listeners.splice(index, 1)
+      if (index > -1) {listeners.splice(index, 1)}
     }
     return this
   }
@@ -207,7 +207,7 @@ export class AnimationController {
     const t = CONFIG.ANIMATION.TIMING
     const isLastStep = currentStep === totalSteps
 
-    if (isLastStep) return t.FINAL_DELAY_MS
+    if (isLastStep) {return t.FINAL_DELAY_MS}
 
     if (totalSteps <= t.SHORT_ANIMATION_THRESHOLD) {
       // 短动画：正弦波调速
@@ -216,7 +216,7 @@ export class AnimationController {
     }
 
     // 长动画：三段式
-    if (currentStep <= 3) return t.SLOW_PHASE_MS
+    if (currentStep <= 3) {return t.SLOW_PHASE_MS}
     if (currentStep >= totalSteps - t.LONG_ANIMATION_END_STEPS) {
       const stepsFromEnd = totalSteps - currentStep
       return t.END_PHASE_BASE_MS + (t.LONG_ANIMATION_END_STEPS - stepsFromEnd) * t.END_PHASE_STEP_MS

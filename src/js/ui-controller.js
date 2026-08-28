@@ -15,7 +15,7 @@
  */
 
 import { CONFIG } from './config.js'
-import { SHI_CHEN, PALACES } from './data.js'
+import { SHI_CHEN } from './data.js'
 
 /**
  * 自定义错误类：UI 操作错误
@@ -115,8 +115,6 @@ class UIController {
    * - 时辰（子时~亥时，12个选项）
    */
   _populateSelects() {
-    console.log('[UI] 📋 开始填充下拉选择框...')
-    
     const monthSel = this.getElement('lunarMonth')
     const daySel = this.getElement('lunarDay')
     const hourSel = this.getElement('lunarHour')
@@ -135,16 +133,14 @@ class UIController {
         option.value = i
         // 特殊月份名称：正月、冬月、腊月
         let monthName
-        if (i === 1) monthName = '正月'
-        else if (i === 11) monthName = '冬月'
-        else if (i === 12) monthName = '腊月'
-        else monthName = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][i-1] + '月'
+        if (i === 1) {monthName = '正月'}
+        else if (i === 11) {monthName = '冬月'}
+        else if (i === 12) {monthName = '腊月'}
+        else {monthName = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'][i-1] + '月'}
         
         option.textContent = monthName
         monthSel.appendChild(option)
       }
-      console.log(`[UI] ✅ 已填充 ${monthSel.options.length} 个月份选项`)
-
       // ===== 2. 填充农历日 =====
       daySel.innerHTML = ''
       const dayNames = ['', '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
@@ -157,8 +153,6 @@ class UIController {
         option.textContent = dayNames[i]
         daySel.appendChild(option)
       }
-      console.log(`[UI] ✅ 已填充 ${daySel.options.length} 个日期选项`)
-
       // ===== 3. 填充十二时辰 =====
       hourSel.innerHTML = ''
       SHI_CHEN.forEach((sc) => {
@@ -167,34 +161,28 @@ class UIController {
         option.textContent = `${sc.name} (${sc.range})`
         hourSel.appendChild(option)
       })
-      console.log(`[UI] ✅ 已填充 ${hourSel.options.length} 个时辰选项`)
-
       // ===== 4. 设置默认值（当前时间）=====
       const now = new Date()
       const h = now.getHours()
       let currentShiChen
       
-      if (h >= 23 || h < 1) currentShiChen = 1       // 子时
-      else if (h < 3) currentShiChen = 2              // 丑时
-      else if (h < 5) currentShiChen = 3              // 寅时
-      else if (h < 7) currentShiChen = 4              // 卯时
-      else if (h < 9) currentShiChen = 5              // 辰时
-      else if (h < 11) currentShiChen = 6             // 巳时
-      else if (h < 13) currentShiChen = 7             // 午时
-      else if (h < 15) currentShiChen = 8             // 未时
-      else if (h < 17) currentShiChen = 9             // 申时
-      else if (h < 19) currentShiChen = 10            // 酉时
-      else if (h < 21) currentShiChen = 11            // 戌时
-      else currentShiChen = 12                        // 亥时
+      if (h >= 23 || h < 1) {currentShiChen = 1}       // 子时
+      else if (h < 3) {currentShiChen = 2}              // 丑时
+      else if (h < 5) {currentShiChen = 3}              // 寅时
+      else if (h < 7) {currentShiChen = 4}              // 卯时
+      else if (h < 9) {currentShiChen = 5}              // 辰时
+      else if (h < 11) {currentShiChen = 6}             // 巳时
+      else if (h < 13) {currentShiChen = 7}             // 午时
+      else if (h < 15) {currentShiChen = 8}             // 未时
+      else if (h < 17) {currentShiChen = 9}             // 申时
+      else if (h < 19) {currentShiChen = 10}            // 酉时
+      else if (h < 21) {currentShiChen = 11}            // 戌时
+      else {currentShiChen = 12}                        // 亥时
 
       // 设置默认选中值
       monthSel.value = 1           // 默认正月
       daySel.value = 1            // 默认初一
       hourSel.value = currentShiChen  // 当前时辰
-      
-      console.log(`[UI] ✅ 默认值已设置: 正月初一 ${SHI_CHEN[currentShiChen - 1].name}`)
-      console.log('[UI] 🎉 下拉选择框填充完成！')
-      
     } catch (error) {
       console.error('[UI] ❌ 填充下拉选择框失败:', error)
     }
@@ -222,9 +210,9 @@ class UIController {
       const day = parseInt(this.getElement('lunarDay')?.value)
       const hour = parseInt(this.getElement('lunarHour')?.value)
 
-      if (!month || month < 1 || month > 12) errors.push('请选择有效的农历月份')
-      if (!day || day < 1 || day > 30) errors.push('请选择有效的农历日期')
-      if (!hour || hour < 1 || hour > 12) errors.push('请选择有效的时辰')
+      if (!month || month < 1 || month > 12) {errors.push('请选择有效的农历月份')}
+      if (!day || day < 1 || day > 30) {errors.push('请选择有效的农历日期')}
+      if (!hour || hour < 1 || hour > 12) {errors.push('请选择有效的时辰')}
 
       if (errors.length > 0) {
         return { valid: false, errors }
@@ -242,14 +230,14 @@ class UIController {
       let n3 = parseInt(this.getElement('num3')?.value)
 
       // 空值自动随机填充
-      if (!n1 || n1 < 1) n1 = Math.floor(Math.random() * 99) + 1
-      if (!n2 || n2 < 1) n2 = Math.floor(Math.random() * 99) + 1
-      if (!n3 || n3 < 1) n3 = Math.floor(Math.random() * 99) + 1
+      if (!n1 || n1 < 1) {n1 = Math.floor(Math.random() * 99) + 1}
+      if (!n2 || n2 < 1) {n2 = Math.floor(Math.random() * 99) + 1}
+      if (!n3 || n3 < 1) {n3 = Math.floor(Math.random() * 99) + 1}
 
       // 回填到输入框
-      if (this.getElement('num1')) this.getElement('num1').value = n1
-      if (this.getElement('num2')) this.getElement('num2').value = n2
-      if (this.getElement('num3')) this.getElement('num3').value = n3
+      if (this.getElement('num1')) {this.getElement('num1').value = n1}
+      if (this.getElement('num2')) {this.getElement('num2').value = n2}
+      if (this.getElement('num3')) {this.getElement('num3').value = n3}
 
       return {
         valid: true,
@@ -278,9 +266,9 @@ class UIController {
     }
 
     // 同步到下拉选择框
-    if (this.getElement('lunarMonth')) this.getElement('lunarMonth').value = lunar.month
-    if (this.getElement('lunarDay')) this.getElement('lunarDay').value = Math.min(lunar.day, 30)
-    if (this.getElement('lunarHour')) this.getElement('lunarHour').value = shiChenIndex
+    if (this.getElement('lunarMonth')) {this.getElement('lunarMonth').value = lunar.month}
+    if (this.getElement('lunarDay')) {this.getElement('lunarDay').value = Math.min(lunar.day, 30)}
+    if (this.getElement('lunarHour')) {this.getElement('lunarHour').value = shiChenIndex}
   }
 
   /**
@@ -290,7 +278,7 @@ class UIController {
    */
   setPalaceHighlight(idx, className) {
     const palace = this._getPalaceElement(idx)
-    if (!palace) return
+    if (!palace) {return}
 
     // 清除同类型的其他高亮
     if (className !== CONFIG.ANIMATION.CLASSES.TRAIL) {
@@ -320,7 +308,7 @@ class UIController {
    */
   showResultCard(result, isNumberMethod, input) {
     const card = this.getElement('resultCard')
-    if (!card) return
+    if (!card) {return}
 
     const p = result.result
     const isGood = p.fortune.includes('吉')
@@ -338,7 +326,7 @@ class UIController {
    */
   hideResultCard() {
     const card = this.getElement('resultCard')
-    if (card) card.classList.add('hidden')
+    if (card) {card.classList.add('hidden')}
   }
 
   /**
@@ -360,11 +348,11 @@ class UIController {
    */
   updateStepIndicator(step, state, label) {
     const stepEl = this.getElement(`step${step}`)
-    if (!stepEl) return
+    if (!stepEl) {return}
 
     stepEl.classList.remove('current', 'done')
-    if (state) stepEl.classList.add(state)
-    if (label) stepEl.textContent = label
+    if (state) {stepEl.classList.add(state)}
+    if (label) {stepEl.textContent = label}
   }
 
   /**
@@ -609,9 +597,9 @@ class UIController {
    */
   _formatChineseMonth(m, isLeap = false) {
     const prefix = isLeap ? '闰' : ''
-    if (m === 1) return prefix + '正月'
-    if (m === 11) return prefix + '冬月'
-    if (m === 12) return prefix + '腊月'
+    if (m === 1) {return prefix + '正月'}
+    if (m === 11) {return prefix + '冬月'}
+    if (m === 12) {return prefix + '腊月'}
     return prefix + this._numToChinese(m) + '月'
   }
 

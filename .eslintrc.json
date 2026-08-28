@@ -25,5 +25,13 @@
     "CONFIG": "readonly",
     "PALACES": "readonly",
     "LUNAR_YEAR_DATA": "readonly"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.js"],
+      "rules": {
+        "max-lines-per-function": "off"
+      }
+    }
+  ]
 }
