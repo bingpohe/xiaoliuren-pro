@@ -53,10 +53,18 @@ export function getLeapMonth(year) {
  * @param {number} monthIndex - 月份序号 (1-12 非闰年, 1-13 闰年)
  * @returns {number} 该月天数 (29 或 30)
  */
-export function getMonthDaysByIndex(year, monthIndex) {
+export function getLeapMonthDays(year) {
+  if (getLeapMonth(year) === 0) {return 0}
   const info = getLunarYearInfo(year)
-  const bitPosition = CONFIG.LUNAR.ENCODED_BITS.MONTH_SIZE_START_BIT + monthIndex - 1
-  return (info & (1 << bitPosition)) ? 30 : 29
+  return (info & (1 << CONFIG.LUNAR.ENCODED_BITS.LEAP_SIZE_START_BIT)) ? 30 : 29
+}
+
+export function getMonthDaysByIndex(year, monthIndex) {
+  const leap = getLeapMonth(year)
+  if (leap > 0 && monthIndex === leap + 1) {return getLeapMonthDays(year)}
+  const month = leap > 0 && monthIndex > leap + 1 ? monthIndex - 1 : monthIndex
+  const bitPosition = CONFIG.LUNAR.ENCODED_BITS.MONTH_SIZE_HIGH_BIT - (month - 1)
+  return (getLunarYearInfo(year) & (1 << bitPosition)) ? 30 : 29
 }
 
 /**
@@ -106,7 +114,8 @@ export function solarToLunar(date) {
   }
 
   const baseDate = CONFIG.LUNAR.BASE_DATE
-  let offset = Math.floor((date - baseDate) / 86400000)
+  const targetDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  let offset = Math.floor((targetDate - baseDate) / 86400000)
 
   if (offset < 0) {
     offset = 0
@@ -218,5 +227,6 @@ export default {
   getLunarYearInfo,
   getLeapMonth,
   getMonthDaysByIndex,
+  getLeapMonthDays,
   lunarYearDays
 }
