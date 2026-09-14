@@ -21,11 +21,12 @@ export const CONFIG = Object.freeze({
   // ========== 农历转换配置 ==========
   LUNAR: {
     BASE_YEAR: 1900,           // 农历数据起始年
-    BASE_DATE: new Date(1900, 0, 31),  // 农历1900年正月初一 = 公历1900-01-31
+    BASE_DATE: Date.UTC(1900, 0, 31),  // 农历1900年正月初一 = 公历1900-01-31
     END_YEAR: 2100,            // 农历数据结束年
     ENCODED_BITS: {
       LEAP_MONTH_MASK: 0xf,   // bits 0-3: 闰月月份
-      MONTH_SIZE_START_BIT: 4, // bits 4-15: 每月大小（1=30天, 0=29天）
+      MONTH_SIZE_LOW_BIT: 4,   // bits 4-15: 每月大小（1=30天, 0=29天），bit4=腊月
+      MONTH_SIZE_HIGH_BIT: 15, // bit15=正月 ... bit4=腊月（高位对应靠前的月份）
       LEAP_SIZE_START_BIT: 16  // bits 16-19: 闰月大小
     },
     MAX_MONTHS_IN_LEAP_YEAR: 13,  // 闰年最多13个月
